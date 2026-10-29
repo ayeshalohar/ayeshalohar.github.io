@@ -1,10 +1,255 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>My Free Website</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ayesha — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f5f0e4;--ink:#2b2833;--muted:#6f6a78;--coral:#e8707a;--line:#2b283326;--grad:linear-gradient(120deg,#e9a8c3,#b9a9dc 55%,#a7c4a2)}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;min-height:100vh;color:var(--ink);font:14px/1.6 'DM Mono',ui-monospace,monospace;background:radial-gradient(circle at 12% 6%,#e9a8c360,transparent 40%),radial-gradient(circle at 90% 30%,#b9a9dc48,transparent 42%),radial-gradient(circle at 20% 95%,#a7c4a260,transparent 40%),var(--paper) fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body.about{user-select:none;touch-action:none}
+#app{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:30px clamp(26px,7vw,88px) 90px;text-align:center}
+#draw{position:fixed;inset:0;z-index:3;pointer-events:none;display:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+nav{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:4px;padding:5px;border-radius:99px;background:#ffffff80;border:1px solid var(--line);margin-bottom:34px}
+nav a{padding:8px 16px;border-radius:99px;text-decoration:none;color:inherit;text-transform:uppercase;letter-spacing:.14em;font-size:11px;transition:.25s}
+nav a:hover{background:#ffffffb0}nav a.on{background:var(--grad)}
+.script{font-family:'Pinyon Script',cursive;font-weight:400;font-size:clamp(3.2rem,11vw,6rem);line-height:1.05;margin:0 0 8px}
+.tag{color:var(--muted);margin:0 auto 30px;max-width:34em}
+.btn{padding:10px 20px;border-radius:99px;background:var(--grad);text-transform:uppercase;letter-spacing:.1em;font-size:11px;transition:.25s;border:1px solid #2b283322}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -12px #2b2833}
+.btn.ghost{background:#ffffff80}
+.chip{border:1px solid var(--line);border-radius:99px;padding:5px 13px;font-size:11px;text-transform:uppercase;letter-spacing:.1em;background:#ffffff80;margin:3px}
+.chip.on{background:var(--grad);border-color:transparent}
+.bar,.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 0 24px}
+.grid{columns:3 230px;column-gap:26px}
+.card{break-inside:avoid;padding:10px 10px 0;margin:0 0 26px;background:#fff;border-radius:14px;cursor:pointer;box-shadow:0 12px 28px -16px #2b2833aa;transition:.25s;transform:rotate(var(--t,0deg))}
+.card:nth-child(3n+1){--t:-1.5deg}.card:nth-child(3n+2){--t:1.1deg}.card:nth-child(3n){--t:-.5deg}
+.card:hover{transform:rotate(0) translateY(-6px);box-shadow:0 20px 34px -16px #b9a9dc}
+.card img,.card video{display:block;width:100%;height:auto;border-radius:8px}
+.cap{padding:11px 4px 13px;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.empty{color:var(--muted);padding:60px 20px;border:1px dashed var(--line);border-radius:20px}
+.about{display:grid;justify-items:center;gap:26px;max-width:600px;margin:0 auto}
+.photo{position:relative;width:min(250px,70%);aspect-ratio:1;padding:10px;background:#fff;border-radius:14px;transform:rotate(-2deg);box-shadow:0 14px 30px -16px #2b2833}
+.photo img,.photo div{width:100%;height:100%;object-fit:cover;border-radius:8px;background:#ece6f3;display:block}
+.photo::before{content:"";position:absolute;top:-12px;left:50%;width:90px;height:24px;transform:translateX(-50%) rotate(3deg);background:#e9a8c3aa}
+.about p{margin:0;font-size:15px;white-space:pre-wrap}.about a{color:#b4477e}
+.hint{font-size:12px;color:var(--muted)}
+.book{position:relative;display:grid;grid-template-columns:1fr 1fr;max-width:860px;margin:0 auto;border-radius:10px;background:#fffdf6;box-shadow:0 26px 50px -26px #2b2833,0 0 0 1px var(--line);perspective:1600px;touch-action:none}
+.book::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:34px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,#2b283320,transparent);pointer-events:none}
+.pg{min-height:400px;padding:22px;display:flex;align-items:center;justify-content:center;position:relative}
+.pg.l{transform-origin:right center}.pg.r{transform-origin:left center}
+.pg img{max-width:100%;max-height:380px;border-radius:6px;box-shadow:0 8px 18px -10px #0008}
+.pg .x{position:absolute;top:8px;right:10px;font-size:20px;opacity:.5}
+.stk{position:absolute;width:92px;z-index:2;touch-action:none;user-select:none;-webkit-user-drag:none;cursor:grab;transform:translate(-50%,-50%) rotate(var(--rot,0deg)) scale(var(--sc,1))}
+.tray{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:22px 0}
+.tray span{position:relative}.tray img{width:56px;height:56px;object-fit:contain;cursor:pointer;transition:.2s}.tray img:hover{transform:scale(1.2) rotate(6deg)}
+.tray .sx{position:absolute;top:-8px;right:-8px;font-size:14px;background:#fff;border-radius:50%;width:18px;height:18px;line-height:16px}
+@media(max-width:700px){.book{grid-template-columns:1fr}.pg.r{display:none}.book::after{display:none}}
+.veil{position:fixed;inset:0;z-index:20;background:#2b2833d0;backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px;overflow:auto}
+.lb{max-width:940px;width:100%;display:grid;gap:14px;color:#fff;text-align:center}
+.lb img,.lb video{max-width:100%;max-height:68vh;margin:0 auto;display:block;border-radius:14px}
+.lb h2{margin:0;font:400 clamp(2.4rem,7vw,3.6rem)/1.1 'Pinyon Script',cursive}.lb p{margin:0;color:#e6e0ee;white-space:pre-wrap}
+.lb .btn.ghost{background:#ffffff1c;border-color:#fff5;color:#fff}
+form.dlg{background:#fffdf6;border-radius:18px;padding:26px;max-width:460px;width:100%;display:grid;gap:12px;text-align:left}
+form.dlg h3{margin:0;font:400 2.2rem 'Pinyon Script',cursive}
+form.dlg input[type=text],form.dlg input[type=email],form.dlg input[type=number],form.dlg textarea{font:inherit;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+form.dlg label{display:grid;gap:5px;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+form.dlg label.chk{display:inline-flex;gap:6px;align-items:center;text-transform:none;margin-right:10px}
+#savebar{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:25}
+#toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:99px;z-index:30}
+.spark{position:fixed;z-index:4;pointer-events:none;font-size:14px;animation:s .9s ease-out forwards}
+@keyframes s{to{opacity:0;transform:translateY(12px) scale(.2) rotate(120deg)}}
+.fade{animation:f .6s ease both}@keyframes f{from{opacity:0;transform:translateY(12px)}}
+footer{display:flex;align-items:center;gap:14px;margin-top:80px}footer::before,footer::after{content:"";flex:1;height:1px;background:var(--line)}footer svg{width:24px;height:24px}
+</style>
+<style id="cur"></style>
 </head>
 <body>
-    <h1>Hello, world!</h1>
-    <p>My website is live on GitHub Pages.</p>
+<canvas id="draw"></canvas>
+<div id="app"></div>
+<div id="modal"></div>
+<button id="savebar" class="btn" hidden>Save changes</button>
+<script id="data" type="application/json">{"site": {"name": "Ayesha", "tagline": "Film & animation. Quiet things that move."}, "about": {"bio": "Hi, I’m Ayesha — a design graduate working across film and animation.", "email": "", "photo": ""}, "works": []}</script>
+<script>
+let S=JSON.parse(document.getElementById('data').textContent);
+S.tags??=['illustration','animation','sketch'];S.sketch??={pages:[],stickers:[],placed:[]};S.settings??={cursor:'default'};
+S.works.forEach(w=>w.tags??=[]);
+let canEdit=false,assets=null,view='work',flt=null,yr=null,sp=0,cur=-1,vis=[];
+const $=s=>document.querySelector(s),modal=$('#modal'),app=$('#app');
+const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const blob=id=>'/_blob/'+id,uid=()=>Math.random().toString(36).slice(2,9),per=()=>innerWidth<700?1:2;
+const FL='<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#e9a8c3" stroke="#2b2833" stroke-width=".5">'+[0,72,144,216,288].map(a=>`<ellipse cx="12" cy="6.5" rx="3.3" ry="5" transform="rotate(${a} 12 12)"/>`).join('')+'</g><circle cx="12" cy="12" r="2.3" fill="#e9b23b"/></svg>';
+const toast=m=>{const t=document.createElement('div');t.id='toast';t.textContent=m;modal.appendChild(t);setTimeout(()=>t.remove(),2600)};
+const dirty=()=>{$('#savebar').hidden=false};
+$('#savebar').onclick=()=>save();
+
+async function save(){
+  try{
+    const a=await claude.use('artifact');if(!a)return toast('Saving isn’t available here');
+    const c=document.documentElement.cloneNode(true);
+    c.querySelector('#app').innerHTML='';c.querySelector('#modal').innerHTML='';c.querySelector('#cur').textContent='';
+    c.querySelector('#savebar').hidden=true;c.querySelector('body').removeAttribute('style');c.querySelector('body').removeAttribute('class');c.removeAttribute('style');
+    c.querySelector('#draw').removeAttribute('style');
+    c.querySelector('#data').textContent=JSON.stringify(S,(k,v)=>k==='placed'?v.filter(p=>!p.tmp):v).replace(/</g,'\\u003c');
+    await a.publish('<!doctype html>\n'+c.outerHTML);
+  }catch(e){if(!e||e.code!=='conflict')toast('Couldn’t save — try again')}
+}
+
+function applyCursor(){
+  const c=S.settings.cursor,P=[0,72,144,216,288].map(a=>`<ellipse cx="12" cy="6.5" rx="3.3" ry="5" transform="rotate(${a} 12 12)"/>`).join('');
+  const m={flower:`<g fill="#e9a8c3" stroke="#2b2833" stroke-width=".6">${P}</g><circle cx="12" cy="12" r="2.3" fill="#e9b23b"/>`,
+   star:'<path d="M12 1l2.6 8.4L23 12l-8.4 2.6L12 23l-2.6-8.4L1 12l8.4-2.6z" fill="#b9a9dc" stroke="#2b2833" stroke-width=".8"/>',
+   dot:'<circle cx="12" cy="12" r="7" fill="#e8707a" stroke="#fff" stroke-width="2"/>'}[c];
+  $('#cur').textContent=m?`*{cursor:url("data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">'+m+'</svg>')}") 16 16,auto!important}`:'';
+}
+
+function render(){
+  document.body.className=view==='about'?'about':'';document.body.style.touchAction=view==='about'?'none':'';
+  const nav=[['work','Work'],['sketchbook','Sketchbook'],['about','About']].concat(canEdit?[['settings','Settings']]:[]).map(([k,l])=>`<a href="#${k}" class="${view===k?'on':''}">${l}</a>`).join('');
+  const body={work:workV,sketchbook:sketchV,about:aboutV,settings:settingsV}[view]();
+  app.innerHTML=`<nav>${nav}</nav><main class="fade">${body}</main><footer>${FL}</footer>`;
+  ({work:wireWork,sketchbook:wireSketch,about:wireAbout,settings:wireSettings})[view]();
+  const cv=$('#draw');cv.style.display=view==='about'?'block':'none';
+}
+
+/* WORK */
+const media=(w,full)=>w.type==='video'?`<video src="${blob(w.asset)}" muted playsinline preload="metadata" ${w.loop?'autoplay loop':''} ${full?'controls autoplay':''}></video>`:`<img src="${blob(w.asset)}" alt="${esc(w.title)}" loading="lazy">`;
+function workV(){
+  const used=S.tags.filter(t=>S.works.some(w=>w.tags.includes(t)));
+  if(flt&&!used.includes(flt))flt=null;
+  vis=S.works.map((w,i)=>i).filter(i=>!flt||S.works[i].tags.includes(flt));
+  return `<h1 class="script">${esc(S.site.name)}</h1><p class="tag">${esc(S.site.tagline)}</p>
+  ${used.length?`<div class="row"><button class="chip ${flt?'':'on'}" data-t="">all</button>${used.map(t=>`<button class="chip ${flt===t?'on':''}" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>`:''}
+  ${canEdit&&assets?'<div class="bar"><button class="btn" id="add">+ Add work</button></div>':''}
+  ${vis.length?`<div class="grid">${vis.map(i=>`<div class="card" data-i="${i}">${media(S.works[i])}<div class="cap">${esc(S.works[i].title)}</div></div>`).join('')}</div>`:`<div class="empty">${canEdit?'Your gallery is empty — add your first piece.':'New work coming soon.'}</div>`}`;
+}
+function wireWork(){
+  app.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{flt=b.dataset.t||null;render()});
+  const a=$('#add');if(a)a.onclick=()=>workForm();
+  app.querySelectorAll('.card').forEach(el=>{const i=+el.dataset.i,v=el.querySelector('video');el.onclick=()=>openLB(i);
+    if(v&&!S.works[i].loop){el.onmouseenter=()=>v.play().catch(()=>{});el.onmouseleave=()=>v.pause()}});
+}
+function openLB(i){
+  cur=i;const w=S.works[i],k=vis.indexOf(i),go=d=>openLB(vis[(k+d+vis.length)%vis.length]);
+  modal.innerHTML=`<div class="veil" id="veil"><div class="lb">${media(w,true).replace('<video','<video '+(w.loop?'loop':''))}<h2>${esc(w.title)}</h2>${w.desc?`<p>${esc(w.desc)}</p>`:''}
+  ${w.tags.length?`<p>${w.tags.map(t=>'#'+esc(t)).join('  ')}</p>`:''}
+  <div class="row"><button class="btn ghost" id="pv">←</button><button class="btn ghost" id="nx">→</button><button class="btn ghost" id="cl">Close</button>${canEdit?'<button class="btn ghost" id="ed">Edit</button><button class="btn ghost" id="dl">Delete</button>':''}</div></div></div>`;
+  $('#cl').onclick=closeLB;$('#pv').onclick=()=>go(-1);$('#nx').onclick=()=>go(1);$('#veil').onclick=e=>{if(e.target.id==='veil')closeLB()};
+  if(canEdit){$('#ed').onclick=()=>workForm(w);$('#dl').onclick=async()=>{if(!confirm('Delete this piece?'))return;S.works.splice(i,1);try{await assets?.delete(w.asset)}catch(e){}closeLB();render();save()}}
+}
+const closeLB=()=>{modal.innerHTML='';cur=-1};
+addEventListener('keydown',e=>{if(cur<0)return;if(e.key==='Escape')closeLB();if(e.key==='ArrowRight')$('#nx')?.click();if(e.key==='ArrowLeft')$('#pv')?.click()});
+function dialog(html,fn){
+  modal.innerHTML=`<div class="veil"><form class="dlg">${html}<div class="row" style="margin:6px 0 0"><button class="btn" type="submit">Save</button><button class="btn ghost" type="button" id="cancel">Cancel</button></div></form></div>`;
+  $('#cancel').onclick=()=>{modal.innerHTML=''};
+  $('form.dlg').onsubmit=async e=>{e.preventDefault();const b=e.target.querySelector('.btn');b.textContent='Working…';b.disabled=true;
+    try{await fn(new FormData(e.target))}catch(err){toast('Something went wrong — files must be under 20 MB');b.textContent='Save';b.disabled=false}};
+}
+function workForm(w){
+  dialog(`<h3>${w?'Edit piece':'Add work'}</h3>${w?'':'<label>Image or video<input type="file" name="file" accept="image/*,video/*" required></label>'}
+  <label>Title<input type="text" name="title" required value="${esc(w?.title||'')}"></label>
+  <label>Description<textarea name="desc" rows="3">${esc(w?.desc||'')}</textarea></label>
+  <label>Tags</label><div>${S.tags.map(t=>`<label class="chk"><input type="checkbox" name="tag" value="${esc(t)}" ${w?.tags.includes(t)?'checked':''}>${esc(t)}</label>`).join('')||'<span class="hint">Add tags in Settings first.</span>'}</div>
+  <label class="chk"><input type="checkbox" name="loop" ${(!w||w.loop)?'checked':''}>Loop video infinitely</label>`,
+  async fd=>{const tags=fd.getAll('tag');
+    if(w){Object.assign(w,{title:fd.get('title'),desc:fd.get('desc'),loop:!!fd.get('loop'),tags})}
+    else{const f=fd.get('file'),r=await assets.upload(f);S.works.unshift({asset:r.id,type:f.type.startsWith('video')?'video':'image',title:fd.get('title'),desc:fd.get('desc'),loop:!!fd.get('loop'),tags})}
+    modal.innerHTML='';render();await save()});
+}
+
+/* SKETCHBOOK */
+function sketchV(){
+  const P=S.sketch.pages,years=[...new Set(P.map(p=>p.year))].sort((a,b)=>b-a);
+  if(!years.includes(yr))yr=years[0]??null;
+  const pg=P.filter(p=>p.year===yr);sp=Math.max(0,Math.min(sp,Math.max(0,pg.length-1)));
+  const key=pg[sp]?.id,h=p=>p?`<img src="${blob(p.asset)}" alt="sketchbook page">${canEdit?`<button class="x" data-del="${p.id}" aria-label="Delete page">×</button>`:''}`:'';
+  const st=S.sketch.placed.filter(x=>x.page===key).map(x=>`<img class="stk" data-id="${x.id}" src="${blob(x.asset)}" alt="" style="left:${x.x}%;top:${x.y}%;--rot:${x.r||0}deg;--sc:${x.s||1}">`).join('');
+  return `<h1 class="script">sketchbook</h1><p class="tag">flip through the pages — tap a sticker below to stick it on. drag to move, scroll to resize (shift+scroll turns), double-click to peel.</p>
+  <div class="row">${years.map(y=>`<button class="chip ${y===yr?'on':''}" data-y="${y}">${y}</button>`).join('')}</div>
+  ${canEdit&&assets?'<div class="bar"><button class="btn ghost" id="addP">+ Add pages</button><button class="btn ghost" id="addS">+ Upload stickers</button></div>':''}
+  ${pg.length?`<div class="book" id="book"><div class="pg l">${h(pg[sp])}</div><div class="pg r">${per()===2?h(pg[sp+1]):''}</div>${st}</div>
+  <div class="row" style="margin-top:20px"><button class="btn ghost" id="prev" ${sp-per()<0?'disabled':''}>← prev</button><button class="btn ghost" id="next" ${sp+per()>=pg.length?'disabled':''}>next →</button></div>`:`<div class="empty">${canEdit?'No pages yet — add your first sketches.':'Pages coming soon.'}</div>`}
+  <div class="tray">${S.sketch.stickers.map(s=>`<span><img src="${blob(s.asset)}" data-a="${s.asset}" alt="sticker">${canEdit?`<button class="sx" data-sx="${s.id}" aria-label="Remove sticker">×</button>`:''}</span>`).join('')||(canEdit?'<span class="hint">Upload transparent PNGs to make stickers.</span>':'')}</div>`;
+}
+function wireSketch(){
+  app.querySelectorAll('[data-y]').forEach(b=>b.onclick=()=>{yr=+b.dataset.y;sp=0;render()});
+  $('#prev')&&($('#prev').onclick=()=>flip(-1));$('#next')&&($('#next').onclick=()=>flip(1));
+  $('#addP')&&($('#addP').onclick=pagesForm);$('#addS')&&($('#addS').onclick=stkForm);
+  app.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{if(!confirm('Delete this page?'))return;const p=S.sketch.pages.find(x=>x.id===b.dataset.del);S.sketch.pages=S.sketch.pages.filter(x=>x!==p);try{await assets?.delete(p.asset)}catch(e){}render();dirty()});
+  app.querySelectorAll('.tray img').forEach(i=>i.onclick=()=>{const k=S.sketch.pages.filter(p=>p.year===yr)[sp]?.id;if(!k)return toast('Add a page first');
+    S.sketch.placed.push({id:uid(),page:k,asset:i.dataset.a,x:50,y:50,s:1,r:Math.round(Math.random()*30-15),tmp:!canEdit});render();if(canEdit)dirty()});
+  app.querySelectorAll('[data-sx]').forEach(b=>b.onclick=e=>{e.stopPropagation();const s=S.sketch.stickers.find(x=>x.id===b.dataset.sx);S.sketch.stickers=S.sketch.stickers.filter(x=>x!==s);S.sketch.placed=S.sketch.placed.filter(p=>p.asset!==s.asset);render();dirty()});
+  const bk=$('#book');if(!bk)return;
+  bk.querySelectorAll('.stk').forEach(el=>{
+    const p=S.sketch.placed.find(x=>x.id===el.dataset.id);if(!(canEdit||p.tmp)){el.style.cursor='default';el.style.pointerEvents='none';return}
+    el.onpointerdown=e=>{e.preventDefault();el.setPointerCapture(e.pointerId);const r=bk.getBoundingClientRect();
+      el.onpointermove=ev=>{p.x=Math.min(100,Math.max(0,(ev.clientX-r.left)/r.width*100));p.y=Math.min(100,Math.max(0,(ev.clientY-r.top)/r.height*100));el.style.left=p.x+'%';el.style.top=p.y+'%'};
+      el.onpointerup=()=>{el.onpointermove=null;if(canEdit)dirty()}};
+    el.ondblclick=()=>{S.sketch.placed=S.sketch.placed.filter(x=>x!==p);el.remove();if(canEdit)dirty()};
+    el.onwheel=e=>{e.preventDefault();if(e.shiftKey){p.r=(p.r||0)+e.deltaY/8;el.style.setProperty('--rot',p.r+'deg')}else{p.s=Math.min(3,Math.max(.4,(p.s||1)-e.deltaY/500));el.style.setProperty('--sc',p.s)}if(canEdit)dirty()};
+  });
+}
+async function flip(d){
+  const n=per(),el=$('#book').querySelector(d>0&&n===2?'.pg.r':'.pg.l');
+  await el.animate([{transform:'rotateY(0)'},{transform:`rotateY(${d>0?-90:90}deg)`}],{duration:240,easing:'ease-in'}).finished;
+  sp=Math.max(0,sp+d*n);render();
+  $('#book').querySelector(d>0||n===1?'.pg.l':'.pg.r').animate([{transform:`rotateY(${d>0?90:-90}deg)`},{transform:'rotateY(0)'}],{duration:240,easing:'ease-out'});
+}
+function pagesForm(){
+  dialog(`<h3>Add pages</h3><label>Images (one per page)<input type="file" name="f" accept="image/*" multiple required></label><label>Year<input type="number" name="y" value="${yr||new Date().getFullYear()}" required></label>`,
+  async fd=>{const y=+fd.get('y');for(const f of fd.getAll('f')){const r=await assets.upload(f);S.sketch.pages.push({id:uid(),asset:r.id,year:y})}yr=y;modal.innerHTML='';render();await save()});
+}
+function stkForm(){
+  dialog(`<h3>Upload stickers</h3><label>Transparent PNGs<input type="file" name="f" accept="image/png,image/webp,image/gif" multiple required></label><p class="hint">Cut-outs with transparent backgrounds work best.</p>`,
+  async fd=>{for(const f of fd.getAll('f')){const r=await assets.upload(f);S.sketch.stickers.push({id:uid(),asset:r.id,name:f.name})}modal.innerHTML='';render();await save()});
+}
+
+/* ABOUT */
+function aboutV(){const a=S.about;
+  return `<div class="about"><div class="photo">${a.photo?`<img src="${blob(a.photo)}" alt="${esc(S.site.name)}">`:'<div></div>'}</div><h1 class="script">about me</h1><p>${esc(a.bio)}</p>${a.email?`<p><a href="mailto:${esc(a.email)}">${esc(a.email)}</a></p>`:''}
+  <p class="hint">psst — try drawing anywhere on this page. it fades in 10 seconds.</p>${canEdit?'<button class="btn ghost" id="eab">Edit about</button>':''}</div>`;}
+function wireAbout(){const b=$('#eab');if(b)b.onclick=()=>dialog(`<h3>Edit about</h3><label>Name<input type="text" name="name" value="${esc(S.site.name)}"></label><label>Tagline<input type="text" name="tag" value="${esc(S.site.tagline)}"></label><label>About me<textarea name="bio" rows="7">${esc(S.about.bio)}</textarea></label><label>Email<input type="email" name="email" value="${esc(S.about.email)}"></label><label>Photo (optional)<input type="file" name="photo" accept="image/*"></label>`,
+  async fd=>{S.site.name=fd.get('name')||S.site.name;S.site.tagline=fd.get('tag');S.about.bio=fd.get('bio');S.about.email=fd.get('email');const p=fd.get('photo');if(p&&p.size){S.about.photo=(await assets.upload(p)).id}modal.innerHTML='';render();await save()})}
+const cv=$('#draw'),cx=cv.getContext('2d'),COL=['#e9a8c3','#b9a9dc','#a7c4a2','#e8707a','#e9b23b'];
+let strokes=[],drawing=null,raf=0,hue=0;
+function loop(){
+  if(cv.width!==innerWidth||cv.height!==innerHeight){cv.width=innerWidth;cv.height=innerHeight}
+  cx.clearRect(0,0,cv.width,cv.height);cx.lineCap='round';cx.lineWidth=7;const now=Date.now();
+  strokes.forEach(s=>{for(let i=1;i<s.p.length;i++){const a=1-(now-s.p[i].t)/10000;if(a<=0)continue;cx.globalAlpha=a;cx.strokeStyle=COL[(Math.floor(i/7)+s.h)%COL.length];cx.beginPath();cx.moveTo(s.p[i-1].x,s.p[i-1].y);cx.lineTo(s.p[i].x,s.p[i].y);cx.stroke()}});
+  strokes=strokes.filter(s=>now-s.p[s.p.length-1].t<10000);raf=view==='about'?requestAnimationFrame(loop):0;
+}
+addEventListener('pointerdown',e=>{if(view!=='about'||e.target.closest('a,button,input,textarea,form,.veil'))return;drawing={h:hue++,p:[{x:e.clientX,y:e.clientY,t:Date.now()}]};strokes.push(drawing);if(!raf)loop()});
+let lastSp=0;
+addEventListener('pointermove',e=>{
+  if(drawing)drawing.p.push({x:e.clientX,y:e.clientY,t:Date.now()});
+  const n=Date.now();if(S.settings.cursor==='trail'&&n-lastSp>70&&e.pointerType==='mouse'&&!modal.querySelector('.veil')){lastSp=n;const s=document.createElement('div');s.className='spark';s.textContent=Math.random()<.5?'\u2726':'\u2727';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.color=['#e9a8c3','#b9a9dc','#a7c4a2'][n%3];modal.appendChild(s);setTimeout(()=>s.remove(),900)}});
+addEventListener('pointerup',()=>drawing=null);addEventListener('pointercancel',()=>drawing=null);
+
+/* SETTINGS */
+function settingsV(){
+  const C=[['default','classic'],['flower','flower'],['star','star'],['dot','dot'],['trail','sparkle trail']];
+  return `<h1 class="script">settings</h1><p class="tag">Tags show up when uploading work. The Work page builds its filter automatically from tags you’ve used.</p>
+  <h3>Tags</h3><div class="row">${S.tags.map(t=>`<span class="chip">${esc(t)} <button data-rm="${esc(t)}" aria-label="Remove ${esc(t)}">×</button></span>`).join('')||'<span class="hint">No tags yet.</span>'}</div>
+  <div class="row"><input id="nt" type="text" placeholder="new tag" style="font:inherit;border:1px solid var(--line);border-radius:99px;padding:8px 14px;background:#fff"><button class="btn" id="at">Add tag</button></div>
+  <h3 style="margin-top:36px">Cursor</h3><div class="row">${C.map(([k,l])=>`<button class="chip ${S.settings.cursor===k?'on':''}" data-c="${k}">${l}</button>`).join('')}</div>`;
+}
+function wireSettings(){
+  app.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{const t=b.dataset.rm;S.tags=S.tags.filter(x=>x!==t);S.works.forEach(w=>w.tags=w.tags.filter(x=>x!==t));render();dirty()});
+  const add=()=>{const v=$('#nt').value.trim().toLowerCase();if(v&&!S.tags.includes(v)){S.tags.push(v);render();dirty()}};
+  $('#at').onclick=add;$('#nt').onkeydown=e=>{if(e.key==='Enter')add()};
+  app.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{S.settings.cursor=b.dataset.c;applyCursor();render();dirty()});
+}
+
+function route(){const h=location.hash.slice(1);view=['work','sketchbook','about','settings'].includes(h)?h:'work';if(view==='settings'&&!canEdit)view='work';strokes=[];render();scrollTo(0,0)}
+addEventListener('hashchange',route);
+applyCursor();route();
+(async()=>{try{const u=await claude.use('user');canEdit=!!(u&&u.canEdit())}catch(e){}
+  if(canEdit){try{assets=await claude.use('assets')}catch(e){}}route()})();
+</script>
 </body>
 </html>
